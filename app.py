@@ -22,24 +22,24 @@ app = Flask(__name__)
 
 @app.route('/')
 def show_products():
-    """Show all playlists."""
+    """Show all products."""
     product = products.find()
-    # This will display all playlists by looping through the database
+    # This will display all products by looping through the database
     return render_template('products_show.html', products=product)
 
 @app.route('/cart')
 def show_cart():
-    """Show all playlists."""
+    """Show all products."""
     cart = carts.find()
-    # This will display all playlists by looping through the database
+    # This will display all products by looping through the database
     return render_template('cart.html', carts=cart)
 
 
 
 @app.route('/products/<product_id>/add', methods=['POST'])
 def product_delete(product_id):
-    # This will delete a playlist by using an id as a parameter
-    """Delete one playlist."""
+    # This will delete a product by using an id as a parameter
+    """Delete one product."""
     if request.form.get('_method') == 'CREATE':
         carts.insert({'_id': ObjectId(product_id)})
         return redirect(url_for('show_cart'))
