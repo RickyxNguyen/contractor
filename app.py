@@ -40,10 +40,11 @@ def show_cart():
 def product_create(product_id):
     # This will delete a product by using an id as a parameter
     """Add one product to cart"""
-    if request.form.get('_method') == 'CREATE':
-        copy = products.find({'_id':ObjectId(product_id)})
-        carts.insert(copy)
-        return redirect(url_for('show_cart',product_id=copy.get('product_id')))
+    product = products.find({'_id':ObjectId(product_id)})
+    
+    carts.insert(product)
+    
+    return redirect(url_for('show_cart'))
 
 
 if __name__ == '__main__':
