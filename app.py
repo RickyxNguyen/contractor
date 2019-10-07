@@ -14,8 +14,8 @@ products.drop()
 carts = db.cart
 carts.drop()
 
-db.products.insert({"name":"WiBook Pro 15", "inventory":100, "description":"Authentic Chinese Knockoff of MacBook Pro 15", "image":"./static/matebook.png"})
-db.products.insert({"name":"WiPro", "inventory":10, "description":"Authentic Chinese Knockoff of Mac Pro", "image":"./static/grater.png"})
+db.products.insert({"name":"WiBook Pro 15", "description":"Authentic Chinese Knockoff of MacBook Pro 15", "image":"./static/matebook.png"})
+db.products.insert({"name":"WiPro", "description":"Authentic Chinese Knockoff of Mac Pro", "image":"./static/grater.png"})
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ def show_products():
 
 @app.route('/cart')
 def show_cart():
-    """Show all products."""
+    """Show cart."""
     cart = carts.find()
     # This will display all products by looping through the database
     return render_template('cart.html', carts=cart)
@@ -37,12 +37,13 @@ def show_cart():
 
 
 @app.route('/products/<product_id>/add', methods=['POST'])
-def product_delete(product_id):
+def product_create(product_id):
     # This will delete a product by using an id as a parameter
-    """Delete one product."""
+    """Add one product to cart"""
     if request.form.get('_method') == 'CREATE':
-        carts.insert({'_id': ObjectId(product_id)})
-        return redirect(url_for('show_cart'))
+        copy = products.find({'_id':ObjectId(product_id)})
+        carts.insert(copy)
+        return redirect(url_for('show_cart',product_id=copy.get('product_id')))
 
 
 if __name__ == '__main__':
