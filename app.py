@@ -45,7 +45,7 @@ def product_create(product_id):
 
     carts.insert(product)
         
-    return redirect(url_for('show_cart', total=total))
+    return redirect(url_for('show_cart'))
 
 
 if __name__ == '__main__':
