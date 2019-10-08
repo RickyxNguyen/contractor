@@ -40,12 +40,22 @@ def product_create(product_id):
     # This will delete a product by using an id as a parameter
     """Add one product to cart"""
 
+    if carts.count_documents({'_id':ObjectId(product_id)}) == 0:
 
-    product = products.find_one({'_id':ObjectId(product_id)})
+        product = products.find_one({'_id':ObjectId(product_id)})
 
-    carts.insert(product)
-        
-    return redirect(url_for('show_cart'))
+        carts.insert(product)
+            
+        return redirect(url_for('show_cart'))
+
+    return redirect(url_for('out_of_stock'))
+ 
+@app.route('/stock')
+def out_of_stock():
+
+
+    return render_template('stock.html')
+
 
 
 if __name__ == '__main__':
