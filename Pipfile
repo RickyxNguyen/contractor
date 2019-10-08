@@ -11,6 +11,7 @@ pymongo = "*"
 werkzeug = "*"
 amzsear = "*"
 pandas = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
