@@ -13,8 +13,8 @@ products.drop()
 carts = db.carts
 carts.drop()
 
-db.products.insert_many([{"name":"WiBook Pro 15", "description":"Authentic Chinese Knockoff of MacBook Pro 15","price":3000, "image":"./static/matebook.png"},
-                        {"name":"WiPro", "description":"Authentic Chinese Knockoff of Mac Pro","price":10000, "image":"./static/grater.png"}])
+db.products.insert_many([{"name":"WiBook Pro 15", "description":"Authentic Chinese Knockoff of MacBook Pro 15","price":2999.99, "image":"./static/matebook.png"},
+                        {"name":"WiPro", "description":"Authentic Chinese Knockoff of Mac Pro","price":9999.99, "image":"./static/grater.png"}])
 
 app = Flask(__name__)
 
@@ -31,7 +31,12 @@ def show_cart():
     """Show cart."""
     cart = carts.find()
     # This will display all products by looping through the database
-    return render_template('cart.html', carts=cart)
+    total_price = list(carts.find({}))
+    total = 0
+    for i in range(len(total_price)):
+        total += total_price[i]["price"]
+        
+    return render_template('cart.html', carts=cart, total=total)
 
 
 
