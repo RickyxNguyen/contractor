@@ -49,6 +49,16 @@ def product_create(product_id):
         return redirect(url_for('show_cart'))
 
     return redirect(url_for('out_of_stock'))
+
+@app.route('/carts/<cart_id>/delete', methods=['POST'])
+def cart_delete(cart_id):
+    # This will delete a product by using an id as a parameter
+    """Remove one product from cart"""
+
+    cart_item = carts.remove({'_id':ObjectId(cart_id)})
+        
+    return redirect(url_for('show_cart'))
+
  
 @app.route('/stock')
 def out_of_stock():
