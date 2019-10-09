@@ -22,9 +22,8 @@ app = Flask(__name__)
 @app.route('/')
 def show_products():
     """Show all products."""
-    product = products.find()
     # This will display all products by looping through the database
-    return render_template('products_show.html', products=product)
+    return render_template('products_show.html', products=products.find())
 
 
 @app.route('/cart')
@@ -61,18 +60,21 @@ def product_create(product_id):
 def cart_delete(cart_id):
     # This will delete a product by using an id as a parameter
     """Remove one product from cart"""
+    cart_item  = carts.find_one({'_id': ObjectId(cart_id)})
 
+        
     carts.update_one(
         {'_id': ObjectId(cart_id)},
         {'$inc': {'quantity': -int(1)}}
-    )
+    )       
+    if cart_item['quantity']==0:
+
+        carts.remove({'_id': ObjectId(cart_id)})
+         
+
     return redirect(url_for('show_cart'))
 
 
-@app.route('/stock')
-def out_of_stock():
-
-    return render_template('stock.html')
 
 
 if __name__ == '__main__':
