@@ -23,7 +23,7 @@ app = Flask(__name__)
 def show_products():
     """Show all products."""
     # This will display all products by looping through the database
-    return render_template('products_show.html', products=products.find())
+    return render_template('products_show.html', products=products.find(),)
 
 
 @app.route('/cart')
@@ -67,7 +67,7 @@ def cart_delete(cart_id):
         {'_id': ObjectId(cart_id)},
         {'$inc': {'quantity': -int(1)}}
     )       
-    if cart_item['quantity']==0:
+    if cart_item['quantity']==1:
 
         carts.remove({'_id': ObjectId(cart_id)})
          
