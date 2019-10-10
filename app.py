@@ -14,7 +14,10 @@ carts = db.carts
 carts.drop()
 
 db.products.insert_many([{"name": "WiBook Pro 15", "description": "Authentic Chinese Knockoff of MacBook Pro 15", "price": 2999.99, "image": "./static/matebook.png"},
-                         {"name": "WiPro", "description": "Authentic Chinese Knockoff of Mac Pro", "price": 9999.99, "image": "./static/grater.png"}])
+                         {"name": "WiPro", "description": "Authentic Chinese Knockoff of Mac Pro", "price": 9999.99, "image": "./static/grater.png"},
+                         {"name": "WiPhone XX", "description": "Authentic Chinese Knockoff of iPhone", "price": 999.99, "image": "http://assets.stickpng.com/thumbs/585fd18fcb11b227491c35d3.png"},
+                         {"name": "Kiwi Watch", "description": "Authentic Chinese Knockoff of Apple Watch", "price": 399.99, "image": "http://www.pngmart.com/files/6/Watch-PNG-Photo.png"}
+                         ])
 
 app = Flask(__name__)
 
@@ -41,7 +44,6 @@ def show_cart():
 
 @app.route('/products/<product_id>/add', methods=['POST'])
 def product_create(product_id):
-    # This will delete a product by using an id as a parameter
     """Add one product to cart"""
 
     if carts.find_one({'_id': ObjectId(product_id)}):
@@ -58,7 +60,6 @@ def product_create(product_id):
 
 @app.route('/carts/<cart_id>/delete', methods=['POST'])
 def cart_delete(cart_id):
-    # This will delete a product by using an id as a parameter
     """Remove one product from cart"""
     cart_item  = carts.find_one({'_id': ObjectId(cart_id)})
 
